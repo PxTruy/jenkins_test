@@ -29,10 +29,11 @@ pipeline {
                     def scm_vars = checkout scm
                     println("" + scm_vars + "My scm vars are:")
                     println(currentBuild.changeSets)
+
+                    sh "git diff --name-only ${scm_vars.GIT_PREVIOUS_COMMIT} ${scm_vars.GIT_COMMIT}"
+
                 }
-                script {
-                    sh 'git diff --name-only $GIT_PREVIOUS_COMMIT $GIT_COMMIT'
-                }
+
             }
         }
     }

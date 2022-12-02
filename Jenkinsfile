@@ -1,6 +1,14 @@
 #!/usr/bin/env groovy
 // See: https://github.com/jenkinsci/pipeline-examples/blob/master/docs/BEST_PRACTICES.md
 // See: https://jenkins.io/doc/book/pipeline/
+
+def getPRChangelog() {
+    return sh(
+            script: "git --no-pager diff origin/${params.target} --name-only",
+            returnStdout: true
+    ).split('\n')
+}
+
 pipeline {
     agent any
     options {
@@ -21,6 +29,9 @@ pipeline {
                     def scm_vars = checkout scm
                     println("" + scm_vars + "My scm vars are:")
                     println(currentBuild.changeSets)
+                }
+                script {
+                    sh 'git diff --name-only $GIT_PREVIOUS_COMMIT $GIT_COMMIT'
                 }
             }
         }

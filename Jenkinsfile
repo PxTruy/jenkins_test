@@ -29,10 +29,19 @@ pipeline {
                     def scm_vars = checkout scm
                     println("" + scm_vars + "My scm vars are:")
                     println(currentBuild.changeSets)
-                    def files = currentBuild.changeSets.stream().map { it.items }.toList()
-                    println(files)
-//                    sh "git diff --name-only ${scm_vars.GIT_PREVIOUS_COMMIT} ${scm_vars.GIT_COMMIT}"
 
+                    for (int i = 0; i < currentBuild.changeLogSets.size(); i++) {
+                        def entries = currentBuild.changeLogSets[i].items
+                        for (int j = 0; j < entries.length; j++) {
+                            def entry = entries[j]
+                            echo "${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}"
+                            def files = new ArrayList(entry.affectedFiles)
+                            for (int k = 0; k < files.size(); k++) {
+                                def file = files[k]
+                                echo " ${file.editType.name} ${file.path}"
+                            }
+                        }
+                    }
                 }
 
             }

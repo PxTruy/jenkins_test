@@ -29,8 +29,9 @@ pipeline {
                     def scm_vars = checkout scm
                     println("" + scm_vars + "My scm vars are:")
                     println(currentBuild.changeSets)
-
-                    sh "git diff --name-only ${scm_vars.GIT_PREVIOUS_COMMIT} ${scm_vars.GIT_COMMIT}"
+                    def files = currentBuild.changeSets.stream().map { it.items }.toList()
+                    println(files)
+//                    sh "git diff --name-only ${scm_vars.GIT_PREVIOUS_COMMIT} ${scm_vars.GIT_COMMIT}"
 
                 }
 

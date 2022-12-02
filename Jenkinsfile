@@ -30,8 +30,9 @@ pipeline {
                     println("" + scm_vars + "My scm vars are:")
                     println(currentBuild.changeSets)
 
-                    for (int i = 0; i < currentBuild.changeLogSets.size(); i++) {
-                        def entries = currentBuild.changeLogSets[i].items
+                    for (int i = 0; i < currentBuild.changeSets.size(); i++) {
+                        echo "xxx"
+                        def entries = currentBuild.changeSets[i].items
                         for (int j = 0; j < entries.length; j++) {
                             def entry = entries[j]
                             echo "${entry.commitId} by ${entry.author} on ${new Date(entry.timestamp)}: ${entry.msg}"

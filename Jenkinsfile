@@ -2,9 +2,9 @@
 // See: https://github.com/jenkinsci/pipeline-examples/blob/master/docs/BEST_PRACTICES.md
 // See: https://jenkins.io/doc/book/pipeline/
 pipeline {
-    agent {
-        label 'docker'
-    }
+//    agent {
+//        label 'docker'
+//    }
     options {
         buildDiscarder(logRotator(numToKeepStr: '100'))
         skipDefaultCheckout()
